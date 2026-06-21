@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Convite para Bia ❤️</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            position: relative;
+        }
+
+        h1 {
+            color: #ff4d6d;
+            margin-bottom: 15px;
+        }
+
+        p {
+            color: #555;
+            margin-bottom: 30px;
+            font-size: 18px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            position: relative;
+            height: 70px;
+        }
+
+        button {
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        #yesBtn {
+            background: #28a745;
+            color: white;
+        }
+
+        #yesBtn:hover {
+            transform: scale(1.1);
+        }
+
+        #noBtn {
+            background: #dc3545;
+            color: white;
+            position: absolute;
+            left: 55%;
+        }
+
+        .success {
+            display: none;
+            margin-top: 25px;
+            font-size: 22px;
+            color: #ff4d6d;
+            font-weight: bold;
+            animation: aparecer 0.6s ease;
+        }
+
+        @keyframes aparecer {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .heart {
+            font-size: 50px;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Bia ❤️</h1>
+
+        <p>
+            Tenho uma pergunta muito importante para você...
+            <br><br>
+            Você aceita sair comigo? 😊
+        </p>
+
+        <div class="buttons">
+            <button id="yesBtn">Sim ❤️</button>
+            <button id="noBtn">Não 😢</button>
+        </div>
+
+        <div class="success" id="successMessage">
+            Sabia que você ia dizer sim! ❤️
+            <div class="heart">🥰🌹❤️</div>
+        </div>
+    </div>
+
+    <script>
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const successMessage = document.getElementById('successMessage');
+
+        function moveButton() {
+            const maxX = window.innerWidth - noBtn.offsetWidth - 20;
+            const maxY = window.innerHeight - noBtn.offsetHeight - 20;
+
+            const randomX = Math.random() * maxX;
+            const randomY = Math.random() * maxY;
+
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+        }
+
+        noBtn.addEventListener('mouseover', moveButton);
+
+        noBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            moveButton();
+        });
+
+        yesBtn.addEventListener('click', () => {
+            document.querySelector('.buttons').style.display = 'none';
+            successMessage.style.display = 'block';
+
+            const container = document.querySelector('.container');
+
+            setTimeout(() => {
+                container.innerHTML = `
+                <h1>Perfeito! ❤️</h1>
+                <p>
+                    Agora não tem mais volta 😍<br><br>
+                    Nosso encontro está oficialmente marcado! 🌹
+                </p>
+                <div style="font-size:70px">🥰❤️🌹</div>
+            `;
+            }, 1500);
+        });
+    </script>
+
+</body>
+
+</html>
