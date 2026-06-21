@@ -168,6 +168,49 @@
             `;
             }, 1500);
         });
+
+        // Se estiver em resolução mobile, move o botão 'Não' para evitar toque acidental
+        function isMobileResolution() {
+            return window.matchMedia && window.matchMedia('(max-width: 600px)').matches;
+        }
+
+        let moveInterval = null
+
+        function startMobileMoveInterval() {
+            stopMobileMoveInterval()
+            // só inicia se for mobile
+            if (!isMobileResolution()) return
+            moveButton() // posição inicial
+            moveInterval = setInterval(moveButton, 400) // mover 2.5x por segundo
+        }
+
+        function stopMobileMoveInterval() {
+            if (moveInterval) {
+                clearInterval(moveInterval)
+                moveInterval = null
+            }
+        }
+
+        function ensureMoveOnMobile() {
+            if (isMobileResolution()) startMobileMoveInterval()
+            else stopMobileMoveInterval()
+        }
+
+        // chamar ao carregar e ao redimensionar/orientation change
+        window.addEventListener('load', ensureMoveOnMobile);
+        window.addEventListener('resize', ensureMoveOnMobile);
+        window.addEventListener('orientationchange', ensureMoveOnMobile);
+
+        // pausar quando a aba não está visível para economizar recursos
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) stopMobileMoveInterval()
+            else ensureMoveOnMobile()
+        })
+
+        // garantir limpeza quando o usuário clicar em 'Sim'
+        yesBtn.addEventListener('click', () => {
+            stopMobileMoveInterval()
+        });
     </script>
 
 </body>
